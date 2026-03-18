@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Nail & Makeup Studio</title>
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-spa"></i>
+                <span>Our Studio</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#artists">Our Artists</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="btn-login" onclick="openLoginModal()">Login</button>
+                <button class="btn-book" onclick="openBookingModal()">Book Now</button>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Where Beauty Meets Perfection</h1>
+            <p>Professional nail care and makeup artistry for every occasion</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="openBookingModal()">Book Appointment</button>
+                <button class="btn-secondary" onclick="scrollToServices()">Explore Services</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Salon">
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Premium Services</h2>
+                <p>Indulge in our luxurious nail and makeup treatments</p>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="service-tabs">
+                <button class="tab-btn active" onclick="filterServices('all')">All</button>
+                <button class="tab-btn" onclick="filterServices('nails')">Nails</button>
+                <button class="tab-btn" onclick="filterServices('makeup')">Makeup</button>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="services-grid" id="services-grid">
+                <!-- Services will be loaded here dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Artists -->
+    <section id="artists" class="artists">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Artists</h2>
+                <p>Talented professionals dedicated to making you beautiful</p>
+            </div>
+            <div class="artists-grid" id="artists-grid">
+                <!-- Artists will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Work</h2>
+                <p>Browse through our latest creations</p>
+            </div>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Gallery images will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('bookingModal')">&times;</span>
+            <h2>Book Your Appointment</h2>
+            <form id="bookingForm" onsubmit="handleBooking(event)">
+                <div class="form-group">
+                    <label for="service">Select Service</label>
+                    <select id="service" required>
+                        <option value="">Choose a service</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="artist">Preferred Artist (Optional)</label>
+                    <select id="artist">
+                        <option value="">Any available artist</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <select id="time" required>
+                            <option value="">Select time</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Special Requests (Optional)</label>
+                    <textarea id="notes" rows="3" placeholder="Any specific requirements..."></textarea>
+                </div>
+                
+                <div class="booking-summary" id="bookingSummary">
+                    <!-- Booking summary will appear here -->
+                </div>
+                
+                <button type="submit" class="btn-submit">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login / Register</h2>
+            <div class="tab-container">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+            </div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-submit">Login</button>
+            </form>
+            
+            <form id="registerForm" onsubmit="handleRegister(event)" style="display: none;">
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">Phone Number</label>
+                    <input type="tel" id="regPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="regConfirmPassword">Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn-submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content payment-modal">
+            <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+            <h2>Payment Details</h2>
+            <div class="payment-summary" id="paymentSummary">
+                <!-- Payment summary will appear here -->
+            </div>
+            
+            <div class="payment-methods">
+                <h3>Select Payment Method</h3>
+                <div class="payment-options">
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="card" checked>
+                        <i class="fas fa-credit-card"></i>
+                        <span>Credit Card</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="paypal">
+                        <i class="fab fa-paypal"></i>
+                        <span>PayPal</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div id="cardPaymentForm">
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="expiryDate">Expiry Date</label>
+                        <input type="text" id="expiryDate" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cardName">Name on Card</label>
+                    <input type="text" id="cardName">
+                </div>
+            </div>
+            
+            <button class="btn-pay" onclick="processPayment()">Pay Now</button>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Get In Touch</h2>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Your Trusted beauti store, Fashion District, JH 10001</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <p>0646660230</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p></p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <p>Mon-Sat: 9am - 8pm<br>Sun: 10am - 6pm</p>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send us a message</h3>
+                    <form id="contactForm" onsubmit="handleContact(event)">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea rows="4" placeholder="Your Message" required></textarea>
+                        <button type="submit" class="btn-submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Glamour Studio</h3>
+                    <p>Where beauty meets perfection. Professional nail care and makeup artistry for every occasion.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-yelp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#artists">Artists</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Manicure</a></li>
+                        <li><a href="#">Pedicure</a></li>
+                        <li><a href="#">Nail Art</a></li>
+                        <li><a href="#">Bridal Makeup</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe for special offers</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 O-Matrix Laps. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="src/js/script.js"></script>
+</body>
+</html>
