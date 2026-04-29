@@ -800,6 +800,30 @@ body {
 .toast.show {
     transform: translateX(0);
 }
+.footer-bottom {
+    background-color: #111;        /* dark footer background */
+    color: #ccc;                   /* soft text color */
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 14px;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.footer-link {
+    color: #00d9ff;               /* bright accent color */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Hover effect */
+.footer-link:hover {
+    color: #ffffff;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
